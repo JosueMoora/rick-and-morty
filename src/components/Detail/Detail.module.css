@@ -1,0 +1,22 @@
+.detail {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+}
+
+.imagen {
+    width: 600px;
+    text-align: right;
+}
+
+.info {
+    padding-left: 2%;
+    width: 30%;
+    background-color: #1a1a1af0;
+    border-radius: 25px;
+    color: white;
+    height: fit-content;
+}
+
+

@@ -1,0 +1,19 @@
+
+body{
+   background-image: url(/img/space.gif);
+   background-size: cover;
+   background-position: center center;
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+}
+
+
+.navBar {
+   display: flex;
+   flex-direction: column;
+   align-items: end;
+   margin-bottom: 9rem;
+   
+   
+}
+

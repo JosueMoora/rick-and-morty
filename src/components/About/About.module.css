@@ -1,0 +1,36 @@
+.div {
+    display: flex;
+    justify-content: space-between;
+}
+.img {
+    width: 35%;
+    
+}
+
+.about {
+    background-color: #1a1a1af0;
+    color: white;
+    text-align: justify;
+    width: 40%;
+    margin-left: 5%;
+    
+
+}
+
+h1{
+    text-align: center;
+}
+
+p, .a {
+    padding-left: 7%;
+    padding-right: 7%;
+}
+.a{
+    display: flex;
+    justify-content: space-evenly;
+
+}
+.icon {
+    width: 70px;
+    height: 70px;
+}
