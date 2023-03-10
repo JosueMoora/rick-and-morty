@@ -1,44 +1,38 @@
-// const axios = require('axios')
+const axios = require("axios");
+const URL = "https://rickandmortyapi.com/api/character/";
 
-// const getCharDetail = (res, id)=> {
-//     axios(`https://rickandmortyapi.com/api/character/${id}`)
-//     .then(response => response.data)
-//     .then(data =>{
-//         let char ={
-//             name: data.name,
-//             status: data.status,
-//             gender: data.gender,
-//             image: data.image,
-//             species: data.species,
-//             origin: data.origin.name,
+const getCharDetail = async (req, res) => {
+  const { detailId } = req.params;
 
-//         }
-//         res.writeHead(200,{'Content-type': 'application/json'}).end(JSON.stringify(char))
-//     })
-//     .catch(err => 
-//         res.writeHead(500, {'Content-type': 'text/plain'}).end(`el personaje con id:${id} no fue encontrado`)
-//         )
-// }
+  if (detailId) {
+    try {
+      const response = await axios(URL + detailId);
+      const character = {
+        id: response.data.id,
+        name: response.data.name,
+        species: response.data.species,
+        image: response.data.image,
+        gender: response.data.gender,
+        status: response.data.status,
+        origin: response.data.origin.name,
+      };
+      return res.status(200).json(character);
+    } catch (error) {
+      return res.status(500).send(error.message);
+    }
+  } else {
+    return res.status(500).send("Debes proveer un id por parametro");
+  }
+};
 
-// module.exports = getCharDetail
+module.exports = { getCharDetail };
 
-const axios = require('axios')
-const url = "https://rickandmortyapi.com/api/character/"
-const getCharDetail = (req , res)=> {
-    const {detailId} = req.params
-    axios(url + detailId).then(response => {
-        const character ={
-                    name: response.data.name,
-                    status: response.data.status,
-                    gender: response.data.gender,
-                    image: response.data.image,
-                    species: response.data.species,
-                    origin: response.data.origin.name,
-                    }
-        return res.status(200).json(character)
-    }).catch(error => {
-        res.status(500).json(error.message)
-    })
-} 
-
-module.exports = {getCharDetail}
+// const character = {
+//   image: data.image,
+//   name: data.name,
+//   gender: data.gender,
+//   species: data.species,
+//   status: data.status,
+//   origin: data.origin.name,
+//   id: data.id,
+// };

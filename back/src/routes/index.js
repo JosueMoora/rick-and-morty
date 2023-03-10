@@ -1,24 +1,32 @@
-const {Router} = require("express")
-const {getCharById} = require("../controllers/getCharbyId") 
-const {getCharDetail} = require("../controllers/getCharDetail") 
-const favs = require("../utils/favs")
-const router = Router()
+const { Router } = require("express");
+const { getCharById } = require("../controllers/getCharById");
+const { getCharDetail } = require("../controllers/getCharDetail");
+const { getApiData } = require("../controllers/saveApiData");
+const { Character } = require("../database/index");
 
-router.get("/onsearch/:id", getCharById)
-router.get("/detail/:detailId", getCharDetail)
-router.post("/create", (req, res) => {
- favs.push({...req.body})
- res.status(200).send('Personaje agragado a fav')
+const router = Router();
 
-})
-router.get("/get", (req, res)=>{
-    return res.status(200).json(favs)
-})
-router.delete("/delete/:id", (req, res)=> {
-    const {id} = req.params
+// ya tienen "/rickandmorty/" antes
+router.get("/onsearch/:id", getCharById);
+router.get("/detail/:detailId", getCharDetail);
+router.get("/all", async (req, res) => {
+  try {
+    const allCharacters = await getApiData();
 
-    favs = favs.filter(char => char.id !== Number(id))
+    await Character.bulkCreate(allCharacters);
+    return res.json(allCharacters);
+  } catch (error) {
+    return res.send(error);
+  }
+});
 
-    return res.status(200).json(favs)
-})
-module.exports = router
+router.get("/alldb", async (req, res) => {
+  try {
+    const info = await Character.findAll();
+    return res.json(info);
+  } catch (error) {
+    return res.send(error);
+  }
+});
+
+module.exports = router;
